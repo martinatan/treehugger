@@ -6,8 +6,8 @@ function init () {
     var gui = new dat.GUI();
 
     // load textures onto materials
-    const treeTexture = new THREE.TextureLoader().load('assets/textures/TreehuggerSurface_for_web.png');
-    const trunkMaterial = new THREE.MeshBasicMaterial( { map: treeTexture } );
+    // const treeTexture = new THREE.TextureLoader().load('assets/textures/TreehuggerSurface_for_web.png');
+    // const trunkMaterial = new THREE.MeshBasicMaterial( { map: treeTexture } );
     
     //init 3D objects
     var trunk = createTrunk();
@@ -17,7 +17,7 @@ function init () {
     var plane = getPlane(300, 300);
 
     //assign textures to 3D objects
-    trunk.material = trunkMaterial;
+    //trunk.material = trunkMaterial;
     //plane.material = asphaltMaterial;
 
     //init light objects
@@ -109,11 +109,11 @@ function init () {
         orbitControls.minDistance = 6;
         orbitControls.maxDistance = 8;
     } else { //portrait type viewport, squatter tree
-        camera.position.x = 3.5;
+        camera.position.x = 3;
         camera.position.y = 0;    
-        camera.position.z = 3.5;
+        camera.position.z = 3;
         orbitControls.minDistance = 3;
-        orbitControls.maxDistance = 4.9;
+        orbitControls.maxDistance = 8;
     }
 
     // continuously update display
@@ -129,19 +129,28 @@ function createTrunk() {
 
     if (windHeight <= windWidth) { //landscape type viewport, taller tree
         trunkRadius = windWidth / 750;
-        trunkHeight = trunkRadius * 2;
+        trunkHeight = trunkRadius * 3;
     } else { //portrait type viewport, squatter tree
         trunkRadius = windWidth / 450;
-        trunkHeight = trunkRadius * 3;
+        trunkHeight = trunkRadius * 4.9;
     }
 
     console.log("trunkrad = " + trunkRadius);
     console.log("trunkheight = " + trunkHeight);
     var trunk = getCylinder(trunkRadius, trunkRadius, trunkHeight, 64);
 
+    var loader = new THREE.TextureLoader();
+    var trunkTexture = loader.load( 'assets/textures/TreehuggerSurface_for_web.png', function ( texture ) {
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        texture.offset.set( 0, 0 );
+        texture.repeat.set( 1, 1 );
+    
+    } );
+
+    trunk.material.map = trunkTexture;
+
     return trunk;
 }
-
 
 function getBox(w, h, d) {
     // test making a box mesh from geo + material
@@ -177,11 +186,9 @@ function getPlane(w, d) {
     
     } );
 
-
     // test making a box mesh from geo + material
     var geometry = new THREE.PlaneGeometry(w, d);
     var material = new THREE.MeshBasicMaterial({
-        
         side: THREE.DoubleSide,
         map: texture
     });
@@ -247,7 +254,6 @@ function getCylinder(radTop, radBott, h, radSeg) {
     // test making a box mesh from geo + material
     var geometry = new THREE.CylinderGeometry(radTop, radBott, h, radSeg);
     var material = new THREE.MeshBasicMaterial({
-        color: 0x75485E
     });
     var mesh = new THREE.Mesh(
         geometry,
