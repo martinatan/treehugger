@@ -1,45 +1,99 @@
 function init () {
-    // init Scene object
     var scene = new THREE.Scene();
 
     //init dat.gui mini controller for objects
-    var gui = new dat.GUI();
+    //var gui = new dat.GUI();
 
-    // load textures onto materials
-    // const treeTexture = new THREE.TextureLoader().load('assets/textures/TreehuggerSurface_for_web.png');
-    // const trunkMaterial = new THREE.MeshBasicMaterial( { map: treeTexture } );
-    
     //init 3D objects
     var trunk = createTrunk();
-    //var trunk = getCylinder(1.5, 1.5, 4, 64);
-    //var disc = getCylinder(5, 5, 1, 64);
+    trunk.name = 'trunk-1';
 
-    var plane = getPlane(300, 300);
+    var plane = getFloor(300, 300);
+    plane.name = 'ground-1';
 
-    //assign textures to 3D objects
-    //trunk.material = trunkMaterial;
-    //plane.material = asphaltMaterial;
+    //var test = getPlane(0.25, 'rgb(255, 255, 255)');
 
     //init light objects
-    var directionalLight = getDirectionalLight(0xffffff, 1);
-    var lightSphere = getSphere(0.05);
     var ambientLight = getAmbientLight('rgb(10, 30, 50)', 1);
+    //var directionalLight = getDirectionalLight(0xffffff, 1);
 
-    //test grabbing plane by name to rotate in update fxn
-    //plane.name = 'plane-1';
-
-    //manipulate 3D objects
-    //trunk.position.y = trunk.geometry.parameters.height/2;
+    //manipulate asphalt plane
     plane.rotation.x = Math.PI/2;
     plane.position.y = -(trunk.geometry.parameters.height/2);
 
-    //manipulate lighting objects
-    directionalLight.position.x = 0;
-    directionalLight.position.y = 0;
-    directionalLight.position.z = 5;
-    directionalLight.intensity = 1;
+    //add environmental map to background of scene
+    scene = assignCubemap(scene);
 
-    //manipulate materials
+    //create dat.gui controller
+    //gui = addGuiControls(gui, directionalLight, ambientLight);
+
+    // add meshes to scene
+    scene.add(trunk);
+    scene.add(plane);
+
+    //add lighting to scene
+    //directionalLight.add(lightSphere);
+    //scene.add(directionalLight);
+    scene.add(ambientLight);
+
+    // init PerspectiveCamera object
+    var camera =  new THREE.PerspectiveCamera(
+        30, //field of view
+        window.innerWidth/window.innerHeight, //aspect ratio
+        1, //near clipping plane
+        1000 //far clipping plane
+    );
+
+    // scene.add(camera);
+    // camera.add(test);
+    // test.position.set( 0, 5, -20 );
+
+    // init Renderer object
+    var renderer = initRenderer();
+    // add renderer to HTML
+    document.getElementById('webgl').appendChild(renderer.domElement);
+
+    // allow for orbit control of scene
+    var orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+    orbitControls.enableDamping = true;
+    //orbitControls.enablePan = false;
+    orbitControls.minPolarAngle = Math.PI/2;
+    orbitControls.maxPolarAngle = Math.PI/2;
+
+    //manipulate camera and orbit controls based on screen format
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    orbitControls.autoRotate = true;
+    orbitControls.autoRotateSpeed = -0.25;
+    if (window.innerHeight <= window.innerWidth) { //landscape type viewport, taller tree
+        camera.position.x = 6;
+        camera.position.y = 0;    
+        camera.position.z = 6;
+        orbitControls.minDistance = 6;
+        orbitControls.maxDistance = 8;
+    } else { //portrait type viewport, squatter tree
+        camera.position.x = 8;
+        camera.position.y = 0;    
+        camera.position.z = 8;
+        orbitControls.minDistance = 4;
+        orbitControls.maxDistance = 8;
+    }
+
+    // continuously update display
+    update(renderer, scene, camera, orbitControls);
+};
+
+// initRenderer: create and return WebGLRenderer object
+function initRenderer() {
+    var renderer = new THREE.WebGLRenderer( {antialias: true});
+    renderer.shadowMap.enabled = true; //enable shadows line 1 of ??
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor(0x51A3A3);
+
+    return renderer;
+}
+
+// assignCubemap: use cubemap as environment background in scene
+function assignCubemap(scene) {
     //load cube map
     var path = 'assets/cubemap/Pond/';
     var format = '.jpg';
@@ -53,74 +107,15 @@ function init () {
 
     scene.background = reflectionCube; //set cubemap as background
 
-    //create dat.gui controller
-    gui.add(directionalLight, 'intensity', 0, 10);
-    gui.add(directionalLight.position, 'x', 1.2, 10);
-    gui.add(directionalLight.position, 'y', 1.2, 10);
-    gui.add(directionalLight.position, 'z', 1.2, 10);
-    gui.add(ambientLight, 'intensity', 0, 10);
+    return scene;
+}
 
-    // add meshes to scene
-    scene.add(trunk);
-    scene.add(plane);
+// createSheet: Returns plane mesh with scanned sheet as texture
+function createSheet() {
 
-    //add lighting to scene
-    directionalLight.add(lightSphere);
-    scene.add(directionalLight);
-    scene.add(ambientLight);
+}
 
-    // init PerspectiveCamera object
-    var camera =  new THREE.PerspectiveCamera(
-        30, //field of view
-        window.innerWidth/window.innerHeight, //aspect ratio
-        1, //near clipping plane
-        1000 //far clipping plane
-    );
-
-    //re position camera angle
-
-    // camera.position.x = 5;
-    // camera.position.y = 0;    
-    // camera.position.z = 5;
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-    // init Renderer object
-    var renderer = new THREE.WebGLRenderer( {antialias: true});
-    renderer.shadowMap.enabled = true; //enable shadows line 1 of ??
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setClearColor(0x51A3A3);
-    
-    // add renderer to HTML
-    document.getElementById('webgl').appendChild(renderer.domElement);
-
-    // allow for orbit control of scene
-    var orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
-    orbitControls.enableDamping = true;
-    orbitControls.minPolarAngle = Math.PI/2;
-    orbitControls.maxPolarAngle = Math.PI/2;
-
-    console.log("height: " + window.innerHeight);
-    console.log("width: " + window.innerWidth);
-    //manipulate camera and orbit controls based on screen format
-    if (window.innerHeight <= window.innerWidth) { //landscape type viewport, taller tree
-        camera.position.x = 6;
-        camera.position.y = 0;    
-        camera.position.z = 6;
-        orbitControls.minDistance = 6;
-        orbitControls.maxDistance = 8;
-    } else { //portrait type viewport, squatter tree
-        camera.position.x = 3;
-        camera.position.y = 0;    
-        camera.position.z = 3;
-        orbitControls.minDistance = 3;
-        orbitControls.maxDistance = 8;
-    }
-
-    // continuously update display
-    update(renderer, scene, camera, orbitControls);
-};
-
-
+// createTrunk: Returns cylinder mesh with trunk surface texture
 function createTrunk() {
     const windHeight = window.innerHeight;
     const windWidth = window.innerWidth;
@@ -137,7 +132,7 @@ function createTrunk() {
 
     console.log("trunkrad = " + trunkRadius);
     console.log("trunkheight = " + trunkHeight);
-    var trunk = getCylinder(trunkRadius, trunkRadius, trunkHeight, 64);
+    var trunk = getCylinder(trunkRadius, trunkRadius, trunkHeight, 32);
 
     var loader = new THREE.TextureLoader();
     var trunkTexture = loader.load( 'assets/textures/TreehuggerSurface_for_web.png', function ( texture ) {
@@ -152,30 +147,8 @@ function createTrunk() {
     return trunk;
 }
 
-function getBox(w, h, d) {
-    // test making a box mesh from geo + material
-    var geometry = new THREE.BoxGeometry(w, h, d);
-    var material = new THREE.MeshPhongMaterial({
-        color: 0x75485E
-    });
-    var mesh = new THREE.Mesh(
-        geometry,
-        material
-    );
-
-    mesh.castShadow = true;
-
-    return mesh;
-}
-
-function getPlane(w, d) {
-
-    // const asphaltTexture = new THREE.TextureLoader().load('assets/textures/Asphalt_004_SD/Asphalt_004_COLOR.jpg');
-
-    // asphaltTexture.wrapS = THREE.RepeatWrapping;
-    // asphaltTexture.wrapT = THREE.RepeatWrapping;
-    // asphaltTexture.repeat.set = (20,20);
-
+// getFloor: Returns Plane mesh with asphalt texture to use as "floor"
+function getFloor(w, d) {
     var loader = new THREE.TextureLoader();
 
     var texture = loader.load( 'assets/textures/Asphalt_004_SD/Asphalt_004_COLOR.jpg', function ( texture ) {
@@ -203,21 +176,80 @@ function getPlane(w, d) {
     return mesh;
 }
 
-function getSphere(radius) {
-
-    // test making a box mesh from geo + material
+// getSphere: Create and return sphere mesh
+function getSphere(radius, color) {
     var geometry = new THREE.SphereGeometry(radius, 24, 24); // size, width and height segments
     var material = new THREE.MeshBasicMaterial({
-        color: 'rgb(255, 255, 255)'
+        color: color
     });
     var mesh = new THREE.Mesh(
         geometry,
         material
     );
+    return mesh;
+}
+
+// getAmbientLight: Create and return ambient light
+function getAmbientLight(color, intensity) {
+    var light = new THREE.AmbientLight(color, intensity);
+    //light.castShadow = true; //ambient does not cast shadows
+    return light;
+}
+
+// getCylinder: Create and return cylinder mesh
+function getCylinder(radTop, radBott, h, radSeg) {
+    // test making a box mesh from geo + material
+    var geometry = new THREE.CylinderGeometry(radTop, radBott, h, radSeg);
+    var material = new THREE.MeshBasicMaterial({
+    });
+    var mesh = new THREE.Mesh(
+        geometry,
+        material
+    );
+    mesh.castShadow = true;
 
     return mesh;
 }
 
+// update: Recursively update display
+function update(renderer, scene, camera, controls) {
+    renderer.render(
+        scene,
+        camera
+    ); // call renderer function on render using scene+camera
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    var trunk = scene.getObjectByName('trunk-1');
+    trunk.height = window.innerHeight;
+
+    controls.update();
+
+    requestAnimationFrame(function() {
+        update(renderer, scene, camera, controls);
+    })
+}
+
+/****
+ * ARTIFACT FUNCTIONS from learning ThreeJS
+****/
+
+//rotate plane animation
+// var plane = scene.getObjectByName('plane-1');
+// plane.rotation.y += 0.001;
+// plane.rotation.z += 0.001;
+
+// addGuiControls: Create controls for dat.GUI
+function addGuiControls(gui, directionalLight, ambientLight) {
+    gui.add(directionalLight, 'intensity', 0, 10);
+    gui.add(directionalLight.position, 'x', 1.2, 10);
+    gui.add(directionalLight.position, 'y', 1.2, 10);
+    gui.add(directionalLight.position, 'z', 1.2, 10);
+    gui.add(ambientLight, 'intensity', 0, 10);
+
+    return gui;
+}
+
+// getPointLight: Create and return point light
 function getPointLight(color, intensity) {
     var light = new THREE.PointLight(color, intensity);
     light.castShadow = true; //enable shadows line 2 of ??
@@ -230,6 +262,7 @@ function getPointLight(color, intensity) {
     return light;
 }
 
+// getDirectionalLight: Create and return directional light
 function getDirectionalLight(color, intensity) {
     var light = new THREE.DirectionalLight(color, intensity);
     light.castShadow = true; //enable shadows line 2 of ??
@@ -242,18 +275,12 @@ function getDirectionalLight(color, intensity) {
     return light;
 }
 
-function getAmbientLight(color, intensity) {
-    var light = new THREE.AmbientLight(color, intensity);
-    //light.castShadow = true; //ambient does not cast shadows
-
-    return light;
-}
-
-
-function getCylinder(radTop, radBott, h, radSeg) {
+// getBox: Create and return box mesh
+function getBox(w, h, d) {
     // test making a box mesh from geo + material
-    var geometry = new THREE.CylinderGeometry(radTop, radBott, h, radSeg);
-    var material = new THREE.MeshBasicMaterial({
+    var geometry = new THREE.BoxGeometry(w, h, d);
+    var material = new THREE.MeshPhongMaterial({
+        color: 0x75485E
     });
     var mesh = new THREE.Mesh(
         geometry,
@@ -261,29 +288,12 @@ function getCylinder(radTop, radBott, h, radSeg) {
     );
 
     mesh.castShadow = true;
-    //mesh.receiveShadow = true;
 
     return mesh;
 }
 
-
-function update(renderer, scene, camera, controls) {
-    renderer.render(
-        scene,
-        camera
-    ); // call renderer function on render using scene+camera
-
-    //rotate plane animation
-    // var plane = scene.getObjectByName('plane-1');
-    // plane.rotation.y += 0.001;
-    // plane.rotation.z += 0.001;
-
-    controls.update();
-
-    requestAnimationFrame(function() {
-        update(renderer, scene, camera, controls);
-    })
-}
-
-
 init();
+
+
+
+
