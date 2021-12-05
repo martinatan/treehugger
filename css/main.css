@@ -1,40 +1,246 @@
+/** GLOBAL STYLING **/
+
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
   position: relative;
+  background-color: black;
 }
 
-header {
+p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  color: white;
+  padding: 10px;
+  filter: drop-shadow(0px 3px 15px rgba(31, 28, 28, 1));
+  line-height: 1.75em;
+}
+
+.image {
+  width: 50%;
+  height: auto;
+  margin: auto;
+  padding: 10px;
+}
+
+img {
+  border-radius: 4px;
+
+  width: 100%;
+  height: auto;
+}
+
+.tab {
+  display: inline-block;
+  margin-left: 56px;
+}
+
+.tab-2 {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+/** MAIN MENU STYLING **/
+
+#menu {
   position: absolute;
   width: 100%;
 
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-header h1 {
+#menu div {
   text-align: center;
   color: white;
-  font-family: "Bitter", sans-serif;
-  font-size: 5em;
   width: 50%;
   margin: auto;
   filter: drop-shadow(0px 3px 15px rgba(31, 28, 28, 1));
-
-  /* background-color: rgba(31, 28, 28, 0.8); */
-  /* box-shadow: 0 0 45px 45px rgba(31, 28, 28, 0.8); */
+  z-index: 2;
 }
 
+h1 {
+  font-family: "Bitter", sans-serif;
+  font-size: 5em;
+}
+
+#menu ul {
+  padding: 0px;
+  display: block;
+}
+
+#menu ul li {
+  font-family: "Open Sans", serif;
+  font-size: 2em;
+  list-style-type: none;
+
+  position: relative;
+  /* display: block; */
+  padding: 0.5em 0;
+
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+#menu ul li a {
+  text-decoration: none !important;
+  color: white !important;
+}
+
+/** MAIN MENU MEDIA QUERIES **/
 @media screen and (max-width: 850px) {
-  header h1 {
-    width: 75%;
-    font-size: 2em;
+  #menu div {
+    width: 100%;
+  }
+
+  #menu h1 {
+    width: 100%;
+    font-size: 2.5em;
+  }
+
+  #menu ul li {
+    font-size: 1.5em;
   }
 }
 
-* {
-  box-sizing: border-box;
+/** OVERLAY STYLING **/
+
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(31, 28, 28, 0.8);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.overlay-text {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay h3 {
+  font-size: 2.5em;
+  font-family: "Bitter", sans-serif;
+  color: white;
+  text-align: center;
+  margin: 30px 0px;
+
+  width: 100%;
+  height: 2.5em;
+
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  filter: drop-shadow(0px 3px 15px rgba(1, 1, 1, 1));
+}
+
+@media screen and (max-width: 850px) {
+  .overlay h3 {
+    font-size: 1.75em;
+  }
+}
+
+.overlay ul {
+  padding: 0px;
+  display: block;
+}
+
+.overlay ul li {
+  font-family: "Open Sans", serif;
+  font-size: 18px;
+  list-style-type: none;
+
+  position: relative;
+  color: white;
+  filter: drop-shadow(0px 3px 15px rgba(31, 28, 28, 1));
+  line-height: 1.5em;
+  margin-left: 40px;
+}
+
+.close-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.text-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  width: 60%;
+  height: 70%;
+  overflow-y: auto;
+  margin: auto;
+}
+
+@media screen and (max-width: 850px) {
+  .text-window {
+    width: 100%;
+  }
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  width: 100%;
+  height: 100%;
+}
+
+/** INSTRUCTIONS STYLING **/
+
+#instructions {
+  position: absolute;
+  width: 100%;
+
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#instructions div {
+  text-align: center;
+  color: white;
+  margin: auto;
+  filter: drop-shadow(0px 3px 15px rgba(31, 28, 28, 1));
+  padding: 0px;
+}
+
+#instructions h2 {
+  margin: 5px 0px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+  font-size: 1em;
 }

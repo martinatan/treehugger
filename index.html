@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>Treehugger</title>
 
+    <script type="text/javascript" src="js/main.js"></script>
+
     <!-- Use fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,26 +14,100 @@
     <link rel="stylesheet" type="text/css" href="./css/main.css">
 
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 </head>
 <body>
-    <header id="banner">
-        <h1>Treehugger</h1>
-    </header>
-
-    <div id="statement-overlay">
-        
-    </div>
-
     <main>
+        <nav id="menu" class="main">
+            <div>
+                <h1 id="main-title">Treehugger</h1>
+                <ul>
+                    <li><a class="hover main-link" id="view-perf-link" tabindex="1" >View Performance</a></li>
+                    <li><a class="hover main-link" id="about-link" tabindex="2">About the Artist</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="instructions" class="main">
+            <div>
+                <h2>Drag to spin</h2>
+                <h2><span>&#8596;</span></h2>
+            </div>
+        </div>
+
+        <div id="performance-overlay" class="overlay">
+            <div class="overlay-text">
+                <div class="close-icon" tabindex="3">
+                    <img src="assets/icons/close-icon.png" alt="X icon to close View Performance overlay"></img>
+                </div>
+
+                <h3>Treehugger Performance</h3>
+
+                <div class="text-window">
+                    <div class="video-container">
+                        <iframe alt="1-hour footage of the artist's installation performance at the original dead tree" 
+                        width="80%" max-width="640px" src="https://www.youtube-nocookie.com/embed/g12rIAjhEb0" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="about-overlay" class="overlay">
+            <div class="overlay-text">
+                <div class="close-icon" tabindex="3">
+                    <img src="assets/icons/close-icon.png" alt="X icon to close About the Artist overlay"></img>
+                </div>
+
+                <h3>About the Artist</h3>
+
+                <div class="text-window">
+                    <div class="image">
+                        <img src="assets/images/ArtistPhoto.jpg" alt="The artist sitting cross-legged in front of the multi-media gallery installation of Treehugger"></img>
+                    </div>
+                    
+                    <p>
+                        <span class="tab"></span>Martina Tan is an interdisciplinary artist, designer, and student from Mount Laurel, NJ. Her current art focus arose from a lifelong fascination with nature and her own skin, and engages with practices of mental wellness, environmentalism, and community building. Outside of school, she can usually be found taking walks, obsessing over playlists, and consuming speculative/science fiction and fantasy stories.
+                    </p>
+
+                    <p>
+                        <span class="tab"></span>Treehugger is a site-specific installation on a dead but otherwise intact tree, intended as a community-generated gesture of care for one another and for the natural environment. Human intervention has reduced this lone tree on the Tufts University campus to a utilitarian structure that is nearly unidentifiable as a once-living organism. Treehugger enables a process of recovery and reflection centered around this tree, via a crowd-sourced, human-sized “skin” of handmade paper made from recycled cardboard.
+                    </p>
+
+                    <p>
+                        <span class="tab"></span>The responses on each page of the “skin” were obtained by inviting participants from the artist’s personal network to take a walk wherever they lived while reflecting on the following questions: 
+                    <ul><li>a.<span class="tab-2"></span>How do you feel connected to nature and to your own skin via your senses or via your life experiences?</li>
+                    <li>b.<span class="tab-2"></span>Pick a plant, animal, or area from your walk. What relationship or memories do you share with it? If you have none, why not?</li>
+                    <li>c.<span class="tab-2"></span>What in the world allows you to breathe? To feel protected?</li>
+                    </ul>
+                    </p>
+                
+                    <div class="image">
+                        <img src="assets/images/InstalledCloseup.JPG" alt="A closeup of mailings from the Treehugger project attached to the original dead tree"></img>
+                    </div>
+                    <p>
+                        <span class="tab"></span>These pages were returned by mail, then attached to the tree in Medford, MA for a week-long outdoor installation. This allowed each walker’s respective journey to converge at a single site, in spite of the geographic spread of these reflective acts. The recording of the live-streamed performance at the site underscores the variety of relationships that the participants have with nature, with themselves, and with other people.
+                    </p>
+                    <p>
+                        <span class="tab"></span>Treehugger has developed into a multimedia documentation of processes preceding and following the original installation, reflecting the continuous, non-linear nature of recovery in the context of both ecological and personal well-being. By suggesting commonplace encounters with one’s environment as a basis for self-care, Treehugger encourages visitors to locate renewed potential in the everyday long after leaving the gallery.
+                    </p>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
         <div id="webgl">
         </div>
 
         <script src="./js/three.js"></script>
         <script src="./js/dat.gui.min.js"></script>
         <script src="./js/OrbitControls.js"></script>
-        <script src="./js/main.js"></script>
+        <script src="./js/tree.js"></script>
     </main>
 </body>
 </html>
