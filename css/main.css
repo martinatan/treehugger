@@ -46,6 +46,18 @@ img {
   margin-left: 20px;
 }
 
+@media screen and (max-width: 850px) {
+  .image {
+    width: 100%;
+  }
+  .tab {
+    margin-left: 36px;
+  }
+  .tab-2 {
+    margin-left: 10px;
+  }
+}
+
 /** MAIN MENU STYLING **/
 
 #menu {
