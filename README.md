@@ -3,6 +3,8 @@
 A web companion to Martina Tan's 2021 BFA Senior Thesis Project, Treehugger.
 
 Go to website on Github Pages: https://martinatan.github.io/treehugger/
+This website is best viewed in Chrome or Firefox!
+
 Video Demo of this website: https://youtu.be/uzHvuPhWWjY
 
 View more images and information about Treehugger here:
