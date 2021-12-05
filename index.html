@@ -19,11 +19,13 @@
     <main>
         <nav id="menu" class="main">
             <div>
-                <h1 id="main-title">Treehugger</h1>
-                <ul>
-                    <li><a class="hover main-link" id="view-perf-link" tabindex="1" >View Performance</a></li>
-                    <li><a class="hover main-link" id="about-link" tabindex="2">About the Artist</a></li>
-                </ul>
+                <h1 id="main-title" tabindex="1">Treehugger</h1>
+                <nav>
+                    <ul>
+                        <li><a class="hover main-link" id="view-perf-link" tabindex="2" >View Performance</a></li>
+                        <li><a class="hover main-link" id="about-link" tabindex="2">About the Artist</a></li>
+                    </ul>
+                </nav>
             </div>
         </nav>
 
@@ -32,15 +34,15 @@
                 <h2>Drag to spin</h2>
                 <h2><span>&#8596;</span></h2>
             </div>
-        </div>
+        </div> <!-- #instructions -->
 
         <div id="performance-overlay" class="overlay">
             <div class="overlay-text">
                 <div class="close-icon" tabindex="3">
                     <img src="assets/icons/close-icon.png" alt="X icon to close View Performance overlay"></img>
-                </div>
+                </div> <!-- .close-icon -->
 
-                <h3>Treehugger Performance</h3>
+                <h3 tabindex="4">Treehugger Performance</h3>
 
                 <div class="text-window">
                     <div class="video-container">
@@ -50,10 +52,10 @@
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen></iframe>
                     </div>
-                </div>
+                </div> <!-- .text-window -->
 
             </div>
-        </div>
+        </div> <!-- #performance-overlay -->
 
         <div id="about-overlay" class="overlay">
             <div class="overlay-text">
@@ -61,48 +63,45 @@
                     <img src="assets/icons/close-icon.png" alt="X icon to close About the Artist overlay"></img>
                 </div>
 
-                <h3>About the Artist</h3>
+                <h3 tabindex="4">About the Artist</h3>
 
                 <div class="text-window">
-                    <div class="image">
+                    <div class="image" tabindex="5">
                         <img src="assets/images/ArtistPhoto.jpg" alt="The artist sitting cross-legged in front of the multi-media gallery installation of Treehugger"></img>
                     </div>
                     
-                    <p>
+                    <p tabindex="5">
                         <span class="tab"></span>Martina Tan is an interdisciplinary artist, designer, and student from Mount Laurel, NJ. Her current art focus arose from a lifelong fascination with nature and her own skin, and engages with practices of mental wellness, environmentalism, and community building. Outside of school, she can usually be found taking walks, obsessing over playlists, and consuming speculative/science fiction and fantasy stories.
                     </p>
 
-                    <p>
+                    <p tabindex="5">
                         <span class="tab"></span>Treehugger is a site-specific installation on a dead but otherwise intact tree, intended as a community-generated gesture of care for one another and for the natural environment. Human intervention has reduced this lone tree on the Tufts University campus to a utilitarian structure that is nearly unidentifiable as a once-living organism. Treehugger enables a process of recovery and reflection centered around this tree, via a crowd-sourced, human-sized “skin” of handmade paper made from recycled cardboard.
                     </p>
 
-                    <p>
+                    <p tabindex="5">
                         <span class="tab"></span>The responses on each page of the “skin” were obtained by inviting participants from the artist’s personal network to take a walk wherever they lived while reflecting on the following questions: 
-                    <ul><li>a.<span class="tab-2"></span>How do you feel connected to nature and to your own skin via your senses or via your life experiences?</li>
-                    <li>b.<span class="tab-2"></span>Pick a plant, animal, or area from your walk. What relationship or memories do you share with it? If you have none, why not?</li>
-                    <li>c.<span class="tab-2"></span>What in the world allows you to breathe? To feel protected?</li>
+                    <ul><li tabindex="5">a.<span class="tab-2"></span>How do you feel connected to nature and to your own skin via your senses or via your life experiences?</li>
+                    <li tabindex="5">b.<span class="tab-2"></span>Pick a plant, animal, or area from your walk. What relationship or memories do you share with it? If you have none, why not?</li>
+                    <li tabindex="5">c.<span class="tab-2"></span>What in the world allows you to breathe? To feel protected?</li>
                     </ul>
                     </p>
                 
-                    <div class="image">
+                    <div class="image" tabindex="5">
                         <img src="assets/images/InstalledCloseup.JPG" alt="A closeup of mailings from the Treehugger project attached to the original dead tree"></img>
                     </div>
-                    <p>
+                    <p tabindex="5">
                         <span class="tab"></span>These pages were returned by mail, then attached to the tree in Medford, MA for a week-long outdoor installation. This allowed each walker’s respective journey to converge at a single site, in spite of the geographic spread of these reflective acts. The recording of the live-streamed performance at the site underscores the variety of relationships that the participants have with nature, with themselves, and with other people.
                     </p>
-                    <p>
+                    <p tabindex="5">
                         <span class="tab"></span>Treehugger has developed into a multimedia documentation of processes preceding and following the original installation, reflecting the continuous, non-linear nature of recovery in the context of both ecological and personal well-being. By suggesting commonplace encounters with one’s environment as a basis for self-care, Treehugger encourages visitors to locate renewed potential in the everyday long after leaving the gallery.
                     </p>
+                </div> <!-- text-window -->
 
-
-
-                </div>
-
-            </div>
-        </div>
+            </div> <!-- overlay-text -->
+        </div> <!-- #about-overlay -->
 
         <div id="webgl">
-        </div>
+        </div> <!-- webgl (Rendering for 3D environment)-->
 
         <script src="./js/three.js"></script>
         <script src="./js/dat.gui.min.js"></script>

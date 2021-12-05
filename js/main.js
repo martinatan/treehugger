@@ -1,3 +1,9 @@
+/*
+ * main.js
+ * JavaScript for controlling navigation of the website and its overlays
+ */
+
+// Add event listeners on load of document
 window.addEventListener('load', (event) => {
     // event listeners for opening overlays
     document.getElementById("view-perf-link").addEventListener("click", openPerformance);
